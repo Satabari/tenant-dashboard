@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 12px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.searchInput::placeholder {
+  color: var(--ink-muted);
+}
+
+.filterButtons {
+  display: flex;
+  gap: 6px;
+}
+
+.filterBtn {
+  padding: 6px 12px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterBtn:hover {
+  border-color: var(--accent);
+}
+
+.filterBtn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
