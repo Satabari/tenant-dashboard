@@ -1,8 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { DashboardData } from "@/lib/types";
+import type { DashboardData, Module } from "@/lib/types";
 import UsagePanel from "./UsagePanel";
+import ModuleSearch from "./ModuleSearch";
 import ModuleGrid from "./ModuleGrid";
 import DashboardSkeleton from "./DashboardSkeleton";
 import DashboardError from "./DashboardError";
@@ -15,6 +16,8 @@ type State =
 
 export default function TenantDashboard() {
   const [state, setState] = useState<State>({ status: "loading" });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"all" | "active" | "inactive">("all");
 
   const load = useCallback(async () => {
     setState({ status: "loading" });
@@ -38,9 +41,25 @@ export default function TenantDashboard() {
     load();
   }, [load]);
 
-  const handleUpgrade = (moduleId: string) => {
-    // Real implementation: open upgrade modal / route to billing with moduleId.
-    console.log("Upgrade requested for module:", moduleId);
+  const getFilteredModules = useCallback((): Module[] => {
+    if (state.status !== "success") return [];
+
+    return state.data.modules.filter((module) => {
+      const matchesSearch = module.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesStatus =
+        statusFilter === "all" ||
+        (statusFilter === "active" && module.active) ||
+        (statusFilter === "inactive" && !module.active);
+
+      return matchesSearch && matchesStatus;
+    });
+  }, [state, searchTerm, statusFilter]);
+
+  const handleFilterChange = (search: string, status: "all" | "active" | "inactive") => {
+    setSearchTerm(search);
+    setStatusFilter(status);
   };
 
   return (
@@ -66,7 +85,8 @@ export default function TenantDashboard() {
             <UsagePanel usage={state.data.usage} />
             <div>
               <h2 className={styles.sectionTitle}>Modules</h2>
-              <ModuleGrid modules={state.data.modules} onUpgrade={handleUpgrade} />
+              <ModuleSearch onFilterChange={handleFilterChange} />
+              <ModuleGrid modules={getFilteredModules()} onUpgrade={handleUpgrade} />
             </div>
           </div>
         )}
