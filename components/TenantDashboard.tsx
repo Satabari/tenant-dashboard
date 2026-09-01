@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { DashboardData } from "@/lib/types";
 import UsagePanel from "./UsagePanel";
+import UsageAlert from "./UsageAlert";
 import ModuleGrid from "./ModuleGrid";
 import DashboardSkeleton from "./DashboardSkeleton";
 import DashboardError from "./DashboardError";
@@ -63,6 +64,7 @@ export default function TenantDashboard() {
 
         {state.status === "success" && (
           <div className={styles.content}>
+            <UsageAlert usage={state.data.usage} />
             <UsagePanel usage={state.data.usage} />
             <div>
               <h2 className={styles.sectionTitle}>Modules</h2>
