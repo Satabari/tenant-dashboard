@@ -1,0 +1,10 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.empty {
+  font-size: 13.5px;
+  color: var(--ink-muted);
+}

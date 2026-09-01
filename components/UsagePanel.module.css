@@ -1,0 +1,69 @@
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.period {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+}
+
+.figureRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.spend {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cap {
+  font-size: 14px;
+  color: var(--ink-muted);
+  padding-bottom: 2px;
+}
+
+.chip {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  transition: width 500ms ease;
+}
+
+.footnote {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  margin: 8px 0 0;
+}

@@ -1,0 +1,24 @@
+.wrap {
+  display: grid;
+  gap: 24px;
+}
+
+.panel {
+  height: 96px;
+  border-radius: 10px;
+  background: var(--border);
+  opacity: 0.5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.card {
+  height: 118px;
+  border-radius: 10px;
+  background: var(--border);
+  opacity: 0.4;
+}

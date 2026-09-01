@@ -1,0 +1,68 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 118px;
+}
+
+.card.locked {
+  background: var(--locked-bg);
+  border: 1px dashed var(--locked);
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.name.locked {
+  color: var(--locked);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--accent);
+  margin-top: 6px;
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+.lockedMeta {
+  font-size: 13px;
+  color: var(--locked);
+  margin: 0;
+}
+
+.upgradeBtn {
+  margin-top: auto;
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.upgradeBtn:hover {
+  filter: brightness(0.97);
+}

@@ -1,0 +1,31 @@
+.box {
+  border: 1px solid var(--alarm);
+  background: var(--alarm-bg);
+  border-radius: 10px;
+  padding: 24px;
+  text-align: left;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--alarm);
+  margin: 0 0 4px;
+}
+
+.message {
+  font-size: 13.5px;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+
+.retryBtn {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--alarm);
+  border: none;
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
