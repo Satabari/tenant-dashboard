@@ -3,6 +3,18 @@
   padding: 32px 40px;
 }
 
+@media (max-width: 768px) {
+  .page {
+    padding: 20px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 16px 16px;
+  }
+}
+
 .container {
   max-width: 720px;
   margin: 0 auto;
@@ -10,6 +22,17 @@
 
 .header {
   margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column-reverse;
+  }
 }
 
 .plan {
@@ -24,13 +47,85 @@
   margin: 0;
 }
 
+@media (max-width: 480px) {
+  .tenantName {
+    font-size: 18px;
+  }
+}
+
+.themeTBtn {
+  padding: 6px 10px;
+  font-size: 16px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: fit-content;
+}
+
+.themeTBtn:hover {
+  background: var(--accent-soft);
+}
+
 .content {
   display: grid;
   gap: 24px;
+}
+
+@media (max-width: 480px) {
+  .content {
+    gap: 16px;
+  }
 }
 
 .sectionTitle {
   font-size: 15px;
   font-weight: 600;
   margin: 0 0 12px;
+}
+
+.headerSettings {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .headerSettings {
+    align-items: flex-start;
+    width: 100%;
+  }
+}
+
+.autoRefreshLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--ink-muted);
+}
+
+.autoRefreshLabel input {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.intervalSelect {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background-color: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.lastPolled {
+  font-size: 11px;
+  color: var(--ink-muted);
 }
