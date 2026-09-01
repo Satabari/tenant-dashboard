@@ -78,3 +78,71 @@
   padding: 0;
   font-weight: 600;
 }
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.headerBtn {
+  padding: 6px 12px;
+  font-size: 12px;
+  background-color: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.headerBtn:hover {
+  background-color: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.themeTBtn {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+}
+
+.themeTBtn:hover {
+  background-color: var(--border);
+}
+
+.autoRefreshControl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.autoRefreshSelect {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background-color: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.lastSyncLabel {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-left: auto;
+}
