@@ -10,6 +10,10 @@
 
 .header {
   margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
 }
 
 .plan {
@@ -33,4 +37,44 @@
   font-size: 15px;
   font-weight: 600;
   margin: 0 0 12px;
+}
+
+.clearCacheBtn {
+  padding: 6px 12px;
+  font-size: 12px;
+  background-color: var(--ink-muted);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.clearCacheBtn:hover {
+  background-color: var(--ink);
+}
+
+.cacheNotice {
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background-color: var(--warn-bg);
+  border: 1px solid var(--warn);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.retryLink {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: underline;
+  padding: 0;
+  font-weight: 600;
 }
