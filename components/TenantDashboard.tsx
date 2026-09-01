@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { DashboardData } from "@/lib/types";
+import { useDarkMode } from "@/lib/useDarkMode";
 import UsagePanel from "./UsagePanel";
 import ModuleGrid from "./ModuleGrid";
 import DashboardSkeleton from "./DashboardSkeleton";
@@ -15,6 +16,7 @@ type State =
 
 export default function TenantDashboard() {
   const [state, setState] = useState<State>({ status: "loading" });
+  const { isDark, toggleDarkMode, isMounted } = useDarkMode();
 
   const load = useCallback(async () => {
     setState({ status: "loading" });
@@ -47,12 +49,23 @@ export default function TenantDashboard() {
     <div className={styles.page}>
       <div className={styles.container}>
         <header className={styles.header}>
-          <p className={styles.plan}>
-            {state.status === "success" ? `${state.data.tenant.plan} plan` : "\u00A0"}
-          </p>
-          <h1 className={styles.tenantName}>
-            {state.status === "success" ? state.data.tenant.name : "Dashboard"}
-          </h1>
+          <div>
+            <p className={styles.plan}>
+              {state.status === "success" ? `${state.data.tenant.plan} plan` : "\u00A0"}
+            </p>
+            <h1 className={styles.tenantName}>
+              {state.status === "success" ? state.data.tenant.name : "Dashboard"}
+            </h1>
+          </div>
+          {isMounted && (
+            <button
+              className={styles.themeTBtn}
+              onClick={toggleDarkMode}
+              title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDark ? "☀️" : "🌙"}
+            </button>
+          )}
         </header>
 
         {state.status === "loading" && <DashboardSkeleton />}
