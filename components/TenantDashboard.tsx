@@ -6,6 +6,7 @@ import UsagePanel from "./UsagePanel";
 import ModuleGrid from "./ModuleGrid";
 import DashboardSkeleton from "./DashboardSkeleton";
 import DashboardError from "./DashboardError";
+import PlanComparisonModal from "./PlanComparisonModal";
 import styles from "./TenantDashboard.module.css";
 
 type State =
@@ -15,6 +16,7 @@ type State =
 
 export default function TenantDashboard() {
   const [state, setState] = useState<State>({ status: "loading" });
+  const [showPlanComparison, setShowPlanComparison] = useState(false);
 
   const load = useCallback(async () => {
     setState({ status: "loading" });
@@ -47,12 +49,23 @@ export default function TenantDashboard() {
     <div className={styles.page}>
       <div className={styles.container}>
         <header className={styles.header}>
-          <p className={styles.plan}>
-            {state.status === "success" ? `${state.data.tenant.plan} plan` : "\u00A0"}
-          </p>
-          <h1 className={styles.tenantName}>
-            {state.status === "success" ? state.data.tenant.name : "Dashboard"}
-          </h1>
+          <div>
+            <p className={styles.plan}>
+              {state.status === "success" ? `${state.data.tenant.plan} plan` : "\u00A0"}
+            </p>
+            <h1 className={styles.tenantName}>
+              {state.status === "success" ? state.data.tenant.name : "Dashboard"}
+            </h1>
+          </div>
+          {state.status === "success" && (
+            <button
+              className={styles.viewPlansBtn}
+              onClick={() => setShowPlanComparison(true)}
+              title="View and compare plans"
+            >
+              View Plans
+            </button>
+          )}
         </header>
 
         {state.status === "loading" && <DashboardSkeleton />}
@@ -69,6 +82,14 @@ export default function TenantDashboard() {
               <ModuleGrid modules={state.data.modules} onUpgrade={handleUpgrade} />
             </div>
           </div>
+        )}
+
+        {state.status === "success" && (
+          <PlanComparisonModal
+            isOpen={showPlanComparison}
+            currentPlan={state.data.tenant.plan}
+            onClose={() => setShowPlanComparison(false)}
+          />
         )}
       </div>
     </div>

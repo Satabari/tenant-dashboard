@@ -10,6 +10,10 @@
 
 .header {
   margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
 }
 
 .plan {
@@ -33,4 +37,21 @@
   font-size: 15px;
   font-weight: 600;
   margin: 0 0 12px;
+}
+
+.viewPlansBtn {
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.viewPlansBtn:hover {
+  filter: brightness(1.1);
 }
