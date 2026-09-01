@@ -5,9 +5,11 @@ import styles from "./ModuleCard.module.css";
 export default function ModuleCard({
   module,
   onUpgrade,
+  onDeactivate,
 }: {
   module: Module;
   onUpgrade: (moduleId: string) => void;
+  onDeactivate: (moduleId: string) => void;
 }) {
   const locked = !module.active;
 
@@ -26,9 +28,17 @@ export default function ModuleCard({
           </button>
         </>
       ) : (
-        <p className={styles.meta}>
-          Last used {module.lastUsedAt ? formatShortDate(module.lastUsedAt) : "—"}
-        </p>
+        <>
+          <p className={styles.meta}>
+            Last used {module.lastUsedAt ? formatShortDate(module.lastUsedAt) : "—"}
+          </p>
+          <button 
+            className={styles.deactivateBtn} 
+            onClick={() => onDeactivate(module.id)}
+          >
+            Deactivate
+          </button>
+        </>
       )}
     </div>
   );

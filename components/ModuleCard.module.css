@@ -66,3 +66,22 @@
 .upgradeBtn:hover {
   filter: brightness(0.97);
 }
+
+.deactivateBtn {
+  margin-top: auto;
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  background: var(--border);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.deactivateBtn:hover {
+  background: var(--ink-muted);
+  color: white;
+}
