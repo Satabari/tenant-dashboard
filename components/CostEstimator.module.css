@@ -1,0 +1,65 @@
+.estimator {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.description {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin: 0 0 12px;
+}
+
+.modules {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 8px;
+  background: var(--locked-bg);
+  border-radius: 4px;
+}
+
+.moduleCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  user-select: none;
+}
+
+.moduleCheckbox input {
+  cursor: pointer;
+}
+
+.cost {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  background: var(--accent-soft);
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.label {
+  color: var(--ink);
+}
+
+.total {
+  color: var(--accent);
+  font-size: 14px;
+}
