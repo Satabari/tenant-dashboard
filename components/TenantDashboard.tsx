@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { DashboardData } from "@/lib/types";
+import { fetchWithRetry, isNetworkError, isOffline } from "@/lib/retryUtils";
 import UsagePanel from "./UsagePanel";
 import ModuleGrid from "./ModuleGrid";
 import DashboardSkeleton from "./DashboardSkeleton";
@@ -17,9 +18,17 @@ export default function TenantDashboard() {
   const [state, setState] = useState<State>({ status: "loading" });
 
   const load = useCallback(async () => {
+    if (isOffline()) {
+      setState({
+        status: "error",
+        message: "You are currently offline. Check your internet connection.",
+      });
+      return;
+    }
+
     setState({ status: "loading" });
     try {
-      const res = await fetch("/api/dashboard");
+      const res = await fetchWithRetry("/api/dashboard", {}, 3, 1000);
       if (!res.ok) {
         const body = await res.json().catch(() => null);
         throw new Error(body?.message ?? "Something went wrong loading the dashboard.");
@@ -27,9 +36,16 @@ export default function TenantDashboard() {
       const data: DashboardData = await res.json();
       setState({ status: "success", data });
     } catch (err) {
+      const message =
+        isNetworkError(err) && isOffline()
+          ? "Network error: Check your connection"
+          : err instanceof Error
+            ? err.message
+            : "Unknown error. Please try again.";
+
       setState({
         status: "error",
-        message: err instanceof Error ? err.message : "Unknown error.",
+        message,
       });
     }
   }, []);
