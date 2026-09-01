@@ -12,7 +12,7 @@ const MOCK_DATA: DashboardData = {
   usage: {
     periodStart: "2026-08-01",
     periodEnd: "2026-08-31",
-    capCents: 250000,
+    capCents: 500000,
     spendCents: 218400,
     byModule: [
       { moduleId: "insights", spendCents: 154200, calls: 48210 },
