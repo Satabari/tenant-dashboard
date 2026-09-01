@@ -66,7 +66,11 @@ export default function TenantDashboard() {
             <UsagePanel usage={state.data.usage} />
             <div>
               <h2 className={styles.sectionTitle}>Modules</h2>
-              <ModuleGrid modules={state.data.modules} onUpgrade={handleUpgrade} />
+              <ModuleGrid 
+                modules={state.data.modules} 
+                usage={state.data.usage.byModule}
+                onUpgrade={handleUpgrade} 
+              />
             </div>
           </div>
         )}

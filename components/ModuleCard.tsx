@@ -1,13 +1,16 @@
-import type { Module } from "@/lib/types";
+import type { Module, ModuleUsage } from "@/lib/types";
 import { formatShortDate } from "@/lib/format";
+import ModuleAnalytics from "./ModuleAnalytics";
 import styles from "./ModuleCard.module.css";
 
 export default function ModuleCard({
   module,
   onUpgrade,
+  usage,
 }: {
   module: Module;
   onUpgrade: (moduleId: string) => void;
+  usage?: ModuleUsage;
 }) {
   const locked = !module.active;
 
@@ -26,9 +29,12 @@ export default function ModuleCard({
           </button>
         </>
       ) : (
-        <p className={styles.meta}>
-          Last used {module.lastUsedAt ? formatShortDate(module.lastUsedAt) : "—"}
-        </p>
+        <>
+          <p className={styles.meta}>
+            Last used {module.lastUsedAt ? formatShortDate(module.lastUsedAt) : "—"}
+          </p>
+          {usage && <ModuleAnalytics usage={usage} />}
+        </>
       )}
     </div>
   );
