@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { DashboardData } from "@/lib/types";
 import UsagePanel from "./UsagePanel";
+import CostEstimator from "./CostEstimator";
 import ModuleGrid from "./ModuleGrid";
 import DashboardSkeleton from "./DashboardSkeleton";
 import DashboardError from "./DashboardError";
@@ -68,6 +69,7 @@ export default function TenantDashboard() {
               <h2 className={styles.sectionTitle}>Modules</h2>
               <ModuleGrid modules={state.data.modules} onUpgrade={handleUpgrade} />
             </div>
+            <CostEstimator modules={state.data.modules} />
           </div>
         )}
       </div>
