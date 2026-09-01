@@ -39,8 +39,49 @@ export default function TenantDashboard() {
   }, [load]);
 
   const handleUpgrade = (moduleId: string) => {
-    // Real implementation: open upgrade modal / route to billing with moduleId.
-    console.log("Upgrade requested for module:", moduleId);
+    if (state.status !== "success") return;
+
+    // Find the module being upgraded
+    const moduleIndex = state.data.modules.findIndex((m) => m.id === moduleId);
+    if (moduleIndex === -1) return;
+
+    // Define upgrade spend amounts for each module
+    const upgradeSpend: Record<string, number> = {
+      workflow: 45000,
+      billing: 52000,
+    };
+
+    const spendIncrease = upgradeSpend[moduleId] || 50000;
+
+    // Update state: activate module and increase spend
+    const updatedModules = [...state.data.modules];
+    updatedModules[moduleIndex] = {
+      ...updatedModules[moduleIndex],
+      active: true,
+      lastUsedAt: new Date().toISOString(),
+    };
+
+    const updatedUsage = {
+      ...state.data.usage,
+      spendCents: state.data.usage.spendCents + spendIncrease,
+      byModule: [
+        ...state.data.usage.byModule,
+        {
+          moduleId,
+          spendCents: spendIncrease,
+          calls: Math.floor(spendIncrease / 10),
+        },
+      ],
+    };
+
+    setState({
+      status: "success",
+      data: {
+        ...state.data,
+        modules: updatedModules,
+        usage: updatedUsage,
+      },
+    });
   };
 
   return (
