@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { DashboardData } from "@/lib/types";
+import { formatShortDate } from "@/lib/format";
 import UsagePanel from "./UsagePanel";
 import ModuleGrid from "./ModuleGrid";
 import DashboardSkeleton from "./DashboardSkeleton";
@@ -15,8 +16,11 @@ type State =
 
 export default function TenantDashboard() {
   const [state, setState] = useState<State>({ status: "loading" });
+  const [lastSync, setLastSync] = useState<Date | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const load = useCallback(async () => {
+    setIsRefreshing(true);
     setState({ status: "loading" });
     try {
       const res = await fetch("/api/dashboard");
@@ -26,11 +30,14 @@ export default function TenantDashboard() {
       }
       const data: DashboardData = await res.json();
       setState({ status: "success", data });
+      setLastSync(new Date());
     } catch (err) {
       setState({
         status: "error",
         message: err instanceof Error ? err.message : "Unknown error.",
       });
+    } finally {
+      setIsRefreshing(false);
     }
   }, []);
 
@@ -88,12 +95,29 @@ export default function TenantDashboard() {
     <div className={styles.page}>
       <div className={styles.container}>
         <header className={styles.header}>
-          <p className={styles.plan}>
-            {state.status === "success" ? `${state.data.tenant.plan} plan` : "\u00A0"}
-          </p>
-          <h1 className={styles.tenantName}>
-            {state.status === "success" ? state.data.tenant.name : "Dashboard"}
-          </h1>
+          <div>
+            <p className={styles.plan}>
+              {state.status === "success" ? `${state.data.tenant.plan} plan` : "\u00A0"}
+            </p>
+            <h1 className={styles.tenantName}>
+              {state.status === "success" ? state.data.tenant.name : "Dashboard"}
+            </h1>
+          </div>
+          <div className={styles.headerActions}>
+            {lastSync && (
+              <span className={styles.lastSync}>
+                Last sync: {lastSync.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+              </span>
+            )}
+            <button
+              className={styles.refreshBtn}
+              onClick={load}
+              disabled={isRefreshing}
+              title="Refresh dashboard data"
+            >
+              {isRefreshing ? "Refreshing..." : "Refresh"}
+            </button>
+          </div>
         </header>
 
         {state.status === "loading" && <DashboardSkeleton />}
