@@ -6,6 +6,7 @@ import UsagePanel from "./UsagePanel";
 import ModuleGrid from "./ModuleGrid";
 import DashboardSkeleton from "./DashboardSkeleton";
 import DashboardError from "./DashboardError";
+import UpgradeConfirmationDialog from "./UpgradeConfirmationDialog";
 import styles from "./TenantDashboard.module.css";
 
 type State =
@@ -15,6 +16,7 @@ type State =
 
 export default function TenantDashboard() {
   const [state, setState] = useState<State>({ status: "loading" });
+  const [upgradingModuleId, setUpgradingModuleId] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setState({ status: "loading" });
@@ -39,8 +41,57 @@ export default function TenantDashboard() {
   }, [load]);
 
   const handleUpgrade = (moduleId: string) => {
-    // Real implementation: open upgrade modal / route to billing with moduleId.
-    console.log("Upgrade requested for module:", moduleId);
+    // Show confirmation dialog
+    setUpgradingModuleId(moduleId);
+  };
+
+  const handleConfirmUpgrade = () => {
+    if (!upgradingModuleId || state.status !== "success") return;
+
+    const moduleId = upgradingModuleId;
+    const moduleIndex = state.data.modules.findIndex((m) => m.id === moduleId);
+    if (moduleIndex === -1) return;
+
+    // Define upgrade spend amounts for each module
+    const upgradeSpend: Record<string, number> = {
+      workflow: 45000,
+      billing: 52000,
+    };
+
+    const spendIncrease = upgradeSpend[moduleId] || 50000;
+
+    // Update state: activate module and increase spend
+    const updatedModules = [...state.data.modules];
+    updatedModules[moduleIndex] = {
+      ...updatedModules[moduleIndex],
+      active: true,
+      lastUsedAt: new Date().toISOString(),
+    };
+
+    const updatedUsage = {
+      ...state.data.usage,
+      spendCents: state.data.usage.spendCents + spendIncrease,
+      byModule: [
+        ...state.data.usage.byModule,
+        {
+          moduleId,
+          spendCents: spendIncrease,
+          calls: Math.floor(spendIncrease / 10),
+        },
+      ],
+    };
+
+    setState({
+      status: "success",
+      data: {
+        ...state.data,
+        modules: updatedModules,
+        usage: updatedUsage,
+      },
+    });
+
+    // Close dialog
+    setUpgradingModuleId(null);
   };
 
   return (
@@ -69,6 +120,21 @@ export default function TenantDashboard() {
               <ModuleGrid modules={state.data.modules} onUpgrade={handleUpgrade} />
             </div>
           </div>
+        )}
+
+        {state.status === "success" && upgradingModuleId && (
+          <UpgradeConfirmationDialog
+            isOpen={true}
+            moduleName={state.data.modules.find((m) => m.id === upgradingModuleId)?.name || ""}
+            upgradeCost={
+              { workflow: 45000, billing: 52000 }[upgradingModuleId as keyof typeof { workflow: 45000; billing: 52000 }] ||
+              50000
+            }
+            currentSpend={state.data.usage.spendCents}
+            cap={state.data.usage.capCents}
+            onConfirm={handleConfirmUpgrade}
+            onCancel={() => setUpgradingModuleId(null)}
+          />
         )}
       </div>
     </div>
