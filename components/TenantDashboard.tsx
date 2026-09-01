@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { DashboardData } from "@/lib/types";
 import UsagePanel from "./UsagePanel";
+import ExportPanel from "./ExportPanel";
 import ModuleGrid from "./ModuleGrid";
 import DashboardSkeleton from "./DashboardSkeleton";
 import DashboardError from "./DashboardError";
@@ -64,6 +65,7 @@ export default function TenantDashboard() {
         {state.status === "success" && (
           <div className={styles.content}>
             <UsagePanel usage={state.data.usage} />
+            <ExportPanel data={state.data} />
             <div>
               <h2 className={styles.sectionTitle}>Modules</h2>
               <ModuleGrid modules={state.data.modules} onUpgrade={handleUpgrade} />
